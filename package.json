@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/jen20/action-docker-build.git"
+    "url": "git+ssh://git@github.com/pulumi/action-docker-build.git"
   },
-  "author": "James Nugent",
+  "author": "Pulumi",
   "license": "MPL-2.0",
   "bugs": {
-    "url": "https://github.com/jen20/action-docker-build/issues"
+    "url": "https://github.com/pulumi/action-docker-build/issues"
   },
-  "homepage": "https://github.com/jen20/action-docker-build#readme",
+  "homepage": "https://github.com/pulumi/action-docker-build#readme",
   "dependencies": {
     "@actions/core": "^1.2.0",
     "@actions/exec": "^1.0.1",
