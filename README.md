@@ -38,6 +38,10 @@ enabled, and release tags should be built with `tag-latest` enabled.
       # push to the registry. Tags must be listed in a comma-separated
       # fashion.
       additional-tags: firstadditionaltag, secondadditionaltag
+      # Optional. The platform architecture for which to build the image.  If
+      # not supplied, the image will build on whatever the platform is of the
+      # GH Action container as indicated by the `use` directive.
+      platform: linux/amd64
 ```
 
 ## Notes on Docker Credentials
@@ -48,3 +52,7 @@ initializing a GPG key for use with `pass`). Consequently, the login falls back 
 encoded strings in a configuration directory with a warning emitted showing the path.
 
 Pull requests to use a credentials helper are welcomed!
+
+## Testing notes
+
+The tests are themeselves a run in a GitHub Action workflow - see `.github/workflows/test.yml`.  The tests are hard-coded to use Pulumi's Docker Hub credentials and thus will not work on forks of this PR.  In addition, the repos to which we push test images (`pulumi/test-action-docker-build*`) are intentionally marked private on Docker Hub to avoid any confusion from Pulumi users downloading these test images because the test images themselves do not do anything useful.
