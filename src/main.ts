@@ -155,7 +155,7 @@ async function run() {
         for (const tag of effectiveAdditionalTags) {
             buildParams.push("-t", `${config.repository}:${tag}`);
         }
-        
+
         for (const arg of config.buildArgs) {
             buildParams.push("--build-arg", `${arg}`)
         }

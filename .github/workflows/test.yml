@@ -17,8 +17,8 @@ jobs:
       - uses: ./
         with:
           dockerfile: testdata/Dockerfile
-          repository: jen20/test-action-docker-build
-          username: jen20
+          repository: pulumi/test-action-docker-build
+          username: pulumibot
           password: ${{ secrets.DOCKER_HUB_PASSWORD }}
           tag-latest: true
           tag-snapshot: true
@@ -34,8 +34,8 @@ jobs:
       - uses: ./
         with:
           dockerfile: testdata/Dockerfile
-          repository: jen20/test-action-docker-build-additional-tags
-          username: jen20
+          repository: pulumi/test-action-docker-build-additional-tags
+          username: pulumibot
           password: ${{ secrets.DOCKER_HUB_PASSWORD }}
           tag-latest: true
           additional-tags: firstTag, secondTag, refs/tags/v1.0.0
@@ -53,7 +53,24 @@ jobs:
         with:
           dockerfile: testdata/Dockerfile.buildkit
           buildkit: true
-          repository: jen20/test-action-docker-build-additional-tags
-          username: jen20
+          repository: pulumi/test-action-docker-build-additional-tags
+          username: pulumibot
+          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+          tag-latest: true
+
+  test-build-args:
+    name: Test with build args
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+
+      - run: npm ci
+      - run: npm run build
+      - uses: ./
+        with:
+          dockerfile: testdata/Dockerfile.buildargs
+          build-args: FOO=bar
+          repository: pulumi/test-action-docker-build-additional-tags
+          username: pulumibot
           password: ${{ secrets.DOCKER_HUB_PASSWORD }}
           tag-latest: true

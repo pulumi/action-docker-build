@@ -9,13 +9,13 @@ specified, or the action will fail. Generally, pull requests and pushes to `mast
 enabled, and release tags should be built with `tag-latest` enabled.
 
 ```yaml
-- uses: jen20/action-docker-build@v1
+- uses: pulumi/action-docker-build@v1
   with:
       # Required. The name of the Docker repository to push to.
-      repository: jen20/test-action-docker-build
+      repository: pulumi/test-action-docker-build
       # Required. The username with which to authenticate with the
       # specified Docker registry.
-      username: jen20
+      username: pulumibot
       # Required. The password with which to authenticate with the
       # specified Docker registry. It is strongly recommended that
       # this value be considered a secret.
