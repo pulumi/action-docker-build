@@ -74,3 +74,25 @@ jobs:
           username: pulumibot
           password: ${{ secrets.DOCKER_HUB_PASSWORD }}
           tag-latest: true
+
+  test-platform-args:
+    name: Test with platform args
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: ["arm64", "amd64"]
+    steps:
+      - uses: actions/checkout@v1
+
+      - run: npm ci
+      - run: npm run build
+      - uses: ./
+        with:
+          dockerfile: testdata/Dockerfile
+          platform: linux/${{ matrix.platform }}
+          repository: pulumi/test-action-docker-build-platform-args
+          username: pulumibot
+          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+          tag-latest: true
+          additional-tags: 0.1-${{ matrix.platform }}

@@ -42,6 +42,9 @@ inputs:
   build-args:
     description: Comma-separated list of build args in the format ARG=value
     required: false
+  platform:
+    description: The target platform for which the image should be built, e.g. "linux/arm64", "linux/amd64".
+    required: false
 runs:
   using: "node12"
   main: "lib/main.js"

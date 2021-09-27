@@ -1,5 +1,5 @@
 import * as core from "@actions/core";
-import {exec} from "@actions/exec";
+import { exec } from "@actions/exec";
 import * as os from "os";
 import * as fs from "fs";
 import * as path from "path";
@@ -19,7 +19,8 @@ interface Config {
     tagSnapshot: boolean,
     additionalTags: string[],
     buildArgs: string[],
-    stripRefsTags: boolean
+    stripRefsTags: boolean,
+    platform: string;
 }
 
 function isNullOrWhitespace(input: string) {
@@ -72,6 +73,7 @@ function readAndValidateConfig(): Config | undefined {
             .map(x => x.trim())
             .filter(x => !isNullOrWhitespace(x)),
         stripRefsTags: core.getInput("strip-refs-tags") != "false",
+        platform: core.getInput("platform"),
     };
 
     if (config.repository == "") {
@@ -105,7 +107,7 @@ function readAndValidateConfig(): Config | undefined {
 function dockerLogin(config: Config) {
     const command = `docker login -u ${config.username} --password-stdin ${config.registry}`;
     try {
-        child_process.execSync(command, {input: config.password});
+        child_process.execSync(command, { input: config.password });
     } catch (error) {
         core.setFailed(error.message);
         throw error;
@@ -156,8 +158,12 @@ async function run() {
             buildParams.push("-t", `${config.repository}:${tag}`);
         }
 
+        if (config.platform) {
+            buildParams.push("--platform", config.platform);
+        }
+
         for (const arg of config.buildArgs) {
-            buildParams.push("--build-arg", `${arg}`)
+            buildParams.push("--build-arg", `${arg}`);
         }
 
         const env = {};
