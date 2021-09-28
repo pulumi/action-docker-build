@@ -1,6 +1,9 @@
 __tests__/runner/*
 
-node_modules/
+# node_modules are intentionally included in the repo because our current npm
+# build does not perform an install.  We will fix this in
+# https://github.com/pulumi/action-docker-build/issues/8
+# node_modules/
 
 # Rest pulled from https://github.com/github/gitignore/blob/master/Node.gitignore
 # Logs
