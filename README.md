@@ -56,3 +56,10 @@ Pull requests to use a credentials helper are welcomed!
 ## Testing notes
 
 The tests are themeselves a run in a GitHub Action workflow - see `.github/workflows/test.yml`.  The tests are hard-coded to use Pulumi's Docker Hub credentials and thus will not work on forks of this PR.  In addition, the repos to which we push test images (`pulumi/test-action-docker-build*`) are intentionally marked private on Docker Hub to avoid any confusion from Pulumi users downloading these test images because the test images themselves do not do anything useful.
+
+## Development Notes
+
+In order to correctly package the release for consumption by external repositories, we must do both of the following:
+
+1. Run `npm install` to ensure that `node_modules/` is included when the Action is run by another repo.  (The Action will fail if these are not included.)
+2. Run `npx tsc` to transpile the TypeScript into JS.  (The action will not include the latest changes unless this command is run.)
